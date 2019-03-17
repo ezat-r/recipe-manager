@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{pageTitle}}</title>
+    <!-- Load Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Load Materialize Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Load FontAwesome CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+</head>
+<body>
+    <!-- Begin Navigation -->
+    <header>
+        <nav>
+            <div class="nav-wrapper blue">
+                <a href="" class="brand-logo">Recipe Manager</a>
+                <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Add Recipe</a></li>
+                    <li><a href="">Manage Categories</a></li>
+                </ul>
+            </div>
+        </nav>
+        <ul class="sidenav" id="mobile-demo">
+            <li><a href="">Home</a></li>
+            <li><a href="">Add Recipe</a></li>
+            <li><a href="">Manage Categories</a></li>
+        </ul>
+    </header>
+    <!-- End Navigation -->
+    <!-- Begin Page Specific Content -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <!-- End Page Specific Content -->
+    <!-- Load JQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <!-- Load Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- JS for Navigation -->
+    <script>
+        $(function(){
+            //Nav slide menu for small screen devices
+            $('.sidenav').sidenav();
+        });
+        
+    </script>
+    <!-- Begin Page Specific JS -->
+    {% block js %}
+    {% endblock%}
+    <!-- End Page Specific JS -->
+</body>
+</html>

@@ -1,0 +1,20 @@
+from flask import Flask, url_for, redirect, render_template, request
+import json
+from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
+
+app = Flask(__name__)
+app.config["MONGO_DBNAME"] = "recipe-manager"
+app.config["MONGO_URI"] = "mongodb://root:adg37tup@ds133496.mlab.com:33496/recipe-manager"
+
+mongo = PyMongo(app)
+
+# method to handle the '/' route or home page
+@app.route("/")
+def index():
+
+    # return the home page template html, and assign it a pagetitle and send accross the 'pageTitle'
+    return render_template("base.html", pageTitle="Recipes")
+
+# run app in debugging mode
+app.run(debug=True)

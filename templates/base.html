@@ -11,23 +11,25 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Load FontAwesome CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <!-- Load Our CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
 </head>
 <body>
     <!-- Begin Navigation -->
     <header>
         <nav>
             <div class="nav-wrapper blue">
-                <a href="" class="brand-logo">Recipe Manager</a>
-                <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <a href="{{url_for('index')}}" class="brand-logo">Recipe Manager</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="">Home</a></li>
+                    <li><a href="{{url_for('index')}}">Home</a></li>
                     <li><a href="">Add Recipe</a></li>
                     <li><a href="">Manage Categories</a></li>
                 </ul>
             </div>
         </nav>
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="">Home</a></li>
+            <li><a href="{{url_for('index')}}">Home</a></li>
             <li><a href="">Add Recipe</a></li>
             <li><a href="">Manage Categories</a></li>
         </ul>
@@ -39,6 +41,26 @@
         {% endblock %}
     </div>
     <!-- End Page Specific Content -->
+    <!-- Begin Footer -->
+    <footer class="container-fluid">
+        <div id="footer-details" class="row">
+            <div class="col s12 m12 l8">
+                <h5>Recipe Manager</h5>
+                <p id="footer-text">Helping you manage your Recipes since 2015!</p>
+            </div>
+            <div class="col s12 m12 l4">
+                <h5>Socials</h5>
+                <ul class="list-inline social-links">
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
     <!-- Load JQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>

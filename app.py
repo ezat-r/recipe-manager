@@ -109,6 +109,7 @@ def viewRecipe(recipe_id):
 
 ######## Edit a Recipe
 
+# method to handle the editing of a recipe
 @app.route("/edit-recipe/<recipe_id>")
 def editRecipe(recipe_id):
     # fetch entry for selected Recipe
@@ -127,6 +128,7 @@ def editRecipe(recipe_id):
     return render_template("edit-recipe.html", recipe=_recipe, categories=allCategories, ingredients=listIngre, recipeSteps=listSteps)
 
 
+# method to handle the updating of a recipe entry in the Database
 @app.route("/update-recipe/<recipe_id>", methods=["POST"])
 def updateRecipe(recipe_id):
     recipes = mongo.db["recipes"]
@@ -190,6 +192,68 @@ def deleteRecipe(recipe_id):
     # Re-direct to home page
     return redirect(url_for("index"))
 
+
+#************ Categories ************#
+
+# method to handle the categories page
+@app.route("/view-categories")
+def getCategories():
+    _categories = mongo.db.categories.find()
+    return render_template("categories.html", categories=_categories)
+
+
+######## Add a Category
+
+# method to handle the adding of a category
+@app.route("/add-category")
+def addCategory():
+    return render_template("add-category.html")
+
+
+# method to handle the inserting of a category to the database
+@app.route("/insert-category", methods=["POST"])
+def insertCategory():
+    categories = mongo.db.categories
+    categories.insert_one(request.form.to_dict())
+    return redirect(url_for("getCategories"))
+
+
+######## Edit a Category
+
+# method to handle the editing of a category
+@app.route("/edit-category/<category_id>")
+def editCategory(category_id):
+    _category = mongo.db.categories.find_one({"_id": ObjectId(category_id)})
+    return render_template("edit-category.html", category=_category)
+
+
+# method to handle the updating of a category in database
+@app.route("/update-category/<category_id>", methods=["POST"])
+def updateCategory(category_id):
+    categories = mongo.db["categories"]
+
+    # used to target the entry we want to update
+    queryId = {"_id": ObjectId(category_id)}
+
+    # grabbing the new values from the form submission and using them to create a dictionary
+    newValues = {
+        "category_name": request.form["category_name"]
+    }
+    
+    # Used to update the entry in the MongoDB database
+    categories.update_one(queryId, {"$set": newValues})
+
+    # Re-direct to the 'get-tasks' view
+    return redirect(url_for("getCategories"))
+
+
+######## Delete a Category
+
+# method to handle the deleting of a category from database
+@app.route("/delete-category/<category_id>")
+def deleteCategory(category_id):
+    mongo.db.categories.delete_one({"_id": ObjectId(category_id)})
+    return redirect(url_for("getCategories"))
 
 # run app in debugging mode
 app.run(debug=True)

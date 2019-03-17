@@ -7,8 +7,8 @@
     padding: 0 0.5em;
 }
 
-/* List view - recipe title  */
-.recipe-title-header{
+/* List view - recipe & category title  */
+.recipe-title-header, .category-title-header{
     margin-top: 5px;
 }
 

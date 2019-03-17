@@ -38,7 +38,7 @@ def listifyDict(dictVal):
         return [{"list_item": dictVal}]
 
 
-######## Recipes
+#************ Recipes ************#
 
 # method to handle the '/' route or home page
 @app.route("/")
@@ -49,10 +49,12 @@ def index():
     # return the home page template html, and assign it a pagetitle and send accross the 'pageTitle'
     return render_template("recipes.html", pageTitle="Recipes", recipes=_recipes)
 
+######## Add a Recipe
 
 # method to handle the 'add-recipe' page
 @app.route("/add-recipe")
 def addRecipe():
+    # grab Categories from DB
     allCategories = mongo.db.categories.find()
     return render_template("add-recipe.html", pageTitle="Add Recipe", categories=allCategories)
 
@@ -85,6 +87,107 @@ def insertRecipe():
     mongo.db.recipes.insert_one(formData)
 
     # then perform a re-direct to the home page
+    return redirect(url_for("index"))
+
+
+######## View a Recipe
+
+# method to handle the viewing of a single recipe
+@app.route("/view-recipe/<recipe_id>")
+def viewRecipe(recipe_id):
+    recipeDB = mongo.db.recipes
+    # Grab recipe entry
+    recipeID = {"_id": ObjectId(recipe_id)}
+    _recipe = mongo.db.recipes.find_one(recipeID)
+    
+    # each time a recipe is viewed increment the 'recipe_views' field
+    currentViews = _recipe["recipe_views"]
+    recipeDB.update_one(recipeID, {"$set": {"recipe_views": int(currentViews) + 1}})
+
+    return render_template("view-recipe.html", pageTitle="View Recipe", recipe=_recipe)
+
+
+######## Edit a Recipe
+
+@app.route("/edit-recipe/<recipe_id>")
+def editRecipe(recipe_id):
+    # fetch entry for selected Recipe
+    _recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+
+    _ingr = _recipe["recipe_ingredients"]
+    _steps = _recipe["recipe_steps"]
+
+    # break up the ingredients & recipe steps into a new list for better handling on front-end
+    listIngre = ["\r" + item["list_item"] for item in _ingr]
+    listSteps = ["\r" + item["list_item"] for item in _steps]
+    
+    # grab Categories from DB
+    allCategories = mongo.db.categories.find()
+
+    return render_template("edit-recipe.html", recipe=_recipe, categories=allCategories, ingredients=listIngre, recipeSteps=listSteps)
+
+
+@app.route("/update-recipe/<recipe_id>", methods=["POST"])
+def updateRecipe(recipe_id):
+    recipes = mongo.db["recipes"]
+
+    # convert form data into a dictionary
+    formData = request.form.to_dict()
+
+    # used to target the entry we want to update
+    queryId = {"_id": ObjectId(recipe_id)}
+
+    # check and see if form data contains allergens
+    hasAllergens = containsAllergens(formData)
+
+    # grabbing the new values from the form submission and using them to create a dictionary
+    if hasAllergens == True:
+        # there are allergens, so make sure to include it in dict
+        updatedValues = {
+            "category_name": formData["category_name"],
+            "recipe_title": formData["recipe_title"],
+            "recipe_author": formData["recipe_author"],
+            "recipe_description": formData["recipe_description"],
+            "recipe_duration": formData["recipe_duration"],
+            "recipe_ingredients": listifyDict(formData["recipe_ingredients"]),
+            "containsAllergens": True,
+            "recipe_allergens": formData["recipe_allergens"],
+            "recipe_steps": listifyDict(formData["recipe_steps"])
+        }
+    else:
+        # there is no allergens so Remove the recipe_allergens field from the Recipe entry
+        recipes.update_one(queryId, {"$unset": {"recipe_allergens": 1}})
+
+        # dict with updated values for recipe
+        updatedValues = {
+            "category_name": formData["category_name"],
+            "recipe_title": formData["recipe_title"],
+            "recipe_author": formData["recipe_author"],
+            "recipe_description": formData["recipe_description"],
+            "recipe_duration": formData["recipe_duration"],
+            "recipe_ingredients": listifyDict(formData["recipe_ingredients"]),
+            "containsAllergens": False,
+            "recipe_steps": listifyDict(formData["recipe_steps"])
+        }
+    
+    # Update the Recipe entry in the MongoDB database
+    recipes.update_one(queryId, {"$set": updatedValues})
+
+    # Re-direct to home page
+    return redirect(url_for("index"))
+
+
+######## Delete a Recipe
+
+# remove recipe handler
+@app.route("/delete-recipe/<recipe_id>")
+def deleteRecipe(recipe_id):
+    recipes = mongo.db["recipes"]
+
+    # Delete the Recipe entry in the MongoDB database
+    recipes.delete_one({"_id": ObjectId(recipe_id)})
+
+    # Re-direct to home page
     return redirect(url_for("index"))
 
 

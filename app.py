@@ -12,9 +12,11 @@ mongo = PyMongo(app)
 # method to handle the '/' route or home page
 @app.route("/")
 def index():
+    # fetch all recipes
+    _recipes = mongo.db.recipes.find()
 
     # return the home page template html, and assign it a pagetitle and send accross the 'pageTitle'
-    return render_template("base.html", pageTitle="Recipes")
+    return render_template("recipes.html", pageTitle="Recipes", recipes=_recipes)
 
 # run app in debugging mode
 app.run(debug=True)

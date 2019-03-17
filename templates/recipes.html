@@ -2,7 +2,7 @@
 {% block content %}
     <ul class="collapsible">
         {% for recipe in recipes %}
-        <li class="recipe-item">
+        <li class="recipe-item" class="recipe-item">
             <div class="collapsible-header">
                 <div class="col s3">
                     <i class="material-icons">expand_more</i>
@@ -26,8 +26,19 @@
         </li>
         {% endfor %}
     </ul>
+    <!-- Begin Pagination -->
+    <div class="row" id="pag-container">
+        <ul class="pagination">
+            <li class="waves-effect" id="pag-left"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class="waves-effect pag-item active"><a>1</a></li>
+            <li class="waves-effect" id="pag-right"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+    </div>
+    <!-- End Pagination -->
 {% endblock %}
 {% block js %}
+<!-- Load our Pagination JS -->
+<script src="{{url_for('static', filename='js/pagination.js')}}"></script>
 <script>
     $(document).ready(function(){
         // Materilize CSS- collapsible element

@@ -12,6 +12,11 @@
     margin-top: 5px;
 }
 
+/* Pagination hide */
+.pag-hide{
+    display: none;
+}
+
 /* Footer */
 
 footer{

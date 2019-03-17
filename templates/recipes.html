@@ -2,7 +2,7 @@
 {% block content %}
     <ul class="collapsible">
         {% for recipe in recipes %}
-        <li class="recipe-item" class="recipe-item">
+        <li class="recipe-item">
             <div class="collapsible-header">
                 <div class="col s3">
                     <i class="material-icons">expand_more</i>
@@ -26,6 +26,11 @@
         </li>
         {% endfor %}
     </ul>
+    <div class="row">
+        <a href="{{url_for('addRecipe')}}" class="waves-effect waves-light btn purple">Add New Recipe
+            <i class="material-icons right">playlist_add</i>
+        </a>
+    </div>
     <!-- Begin Pagination -->
     <div class="row" id="pag-container">
         <ul class="pagination">

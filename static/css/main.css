@@ -17,6 +17,18 @@
     display: none;
 }
 
+/* Add & Edit Recipe Page - helper message */
+
+.helper-message{
+    color: red;
+    font-style: italic;
+    margin-left: 10px;
+}
+
+.element-hide{
+    display: none;
+}
+
 /* Footer */
 
 footer{

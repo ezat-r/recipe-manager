@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Add New Recipe</h3>
+<div class="row">
+    <!-- Begin Form -->
+    <form action="{{url_for('insertRecipe')}}" method="POST" class="col s12">
+        <!-- Begin Recipe Category Select Element -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">poll</i>
+                <select id="category" name="category_name">
+                    <option disabled selected>Choose Category</option>
+                    {% for category in categories %}
+                    <option value="{{category.category_name}}">{{category.category_name}}</option>
+                    {% endfor %}
+                </select>
+                <label>Recipe Category</label>
+            </div>
+        </div>
+        <!-- End Recipe Category Select Element -->
+        <!-- Begin Recipe Title Element -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">title</i>
+                <input id="recipe_title" type="text" name="recipe_title" class="validate" required>
+                <label for="recipe_title">Recipe Name</label>
+            </div>
+        </div>
+        <!-- End Recipe Title Element -->
+        <!-- Begin Recipe Author Element -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">person</i>
+                <input id="recipe_author" type="text" name="recipe_author" class="validate" required>
+                <label for="recipe_author">Recipe Author</label>
+            </div>
+        </div>
+        <!-- End Recipe Author Element -->
+        <!-- Begin Recipe Description Element -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">description</i>
+                <input id="recipe_description" type="text" name="recipe_description" class="validate" required>
+                <label for="recipe_description">Recipe Description</label>
+            </div>
+        </div>
+        <!-- End Recipe Description Element -->
+        <!-- Begin Recipe Duration Element -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">access_time</i>
+                <input id="recipe_duration" type="text" name="recipe_duration" class="validate" required>
+                <label for="recipe_duration">Recipe Estimated Duration</label>
+            </div>
+        </div>
+        <!-- End Recipe Duration Element -->
+        <!-- Begin Recipe Ingredients Element -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">format_list_numbered</i>
+                <textarea name="recipe_ingredients" id="recipe_ingredients" class="materialize-textarea" required></textarea>
+                <label for="recipe_ingredients">Recipe Ingredients</label>
+            </div>
+            <p id="form-helper1" class="helper-message element-hide">Press 'Enter' to add a new line!</p>
+        </div>
+        <!-- End Recipe Ingredients Element -->
+        <!-- Begin containsAllergens Switch Element -->
+        <div class="row">
+            <div class="switch">
+                <label>
+                    <input id="containsAllergens" name="containsAllergens" type="checkbox">
+                    <span class="lever"></span>
+                    Contains Allergens?
+                </label>
+            </div>
+        </div>
+        <!-- End containsAllergens Switch Element -->
+        <!-- Begin Recipe Allergens Element -->
+        <div class="row element-hide" id="allergens-field">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">description</i>
+                <input id="recipe_allergens" type="text" name="recipe_allergens" class="validate" required>
+                <label for="recipe_allergens">Allergens</label>
+            </div>
+        </div>
+        <!-- End Recipe Allergens Element -->
+        <!-- Begin Recipe Steps Element -->
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">format_list_numbered</i>
+                <textarea name="recipe_steps" id="recipe_steps" class="materialize-textarea" required></textarea>
+                <label for="recipe_ingredients">Recipe Steps</label>
+            </div>
+            <p id="form-helper2" class="helper-message element-hide">Press 'Enter' to add a new line!</p>
+        </div>
+        <!-- End Recipe Steps Element -->
+        <div class="row">
+            <button class="waves-effect waves-light btn green" type="submit">Add Recipe
+                <i class="material-icons right">playlist_add</i>
+            </button>
+        </div>
+    </form>
+    <!-- End Form -->
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    $(function(){
+        // once the page loads, call the 'hideShowAllergensField' function
+        window.onload = hideShowAllergensField();
+
+        // Materialize CSS - Form Select tag initialisation
+        $('select').formSelect();
+
+        // Hide/show helper message for 'recipe_ingredients' textarea
+        $("#recipe_ingredients").focusin(function(){
+            toggleElementClass("#form-helper1", "element-hide");
+        });
+
+        $("#recipe_ingredients").focusout(function(){
+            toggleElementClass("#form-helper1", "element-hide");
+        });
+
+        // Hide/show helper message for 'recipe_steps' textarea
+        $("#recipe_steps").focusin(function(){
+            toggleElementClass("#form-helper2", "element-hide");
+        });
+
+        $("#recipe_steps").focusout(function(){
+            toggleElementClass("#form-helper2", "element-hide");
+        });  
+
+        // Hide/show allergens input field
+        $("#containsAllergens").on("click", function(){
+            toggleElementClass("#allergens-field", "element-hide");
+
+            hideShowAllergensField();
+        });
+
+        function toggleElementClass(id, className){
+            $(id).toggleClass(className);
+        }
+
+        function hideShowAllergensField(){
+            // check if there is a 'name' attribute already present
+            if($("#recipe_allergens").attr("name") == "recipe_allergens"){
+                // if there is then remove the 'name' attribute and the 'required' property so it doesn't get submitted with the rest of the form
+                $("#recipe_allergens").removeAttr("name").removeAttr("required");
+            }else{
+                // otherwise, assign the form element with a 'name' attribute and a 'required' property
+                $("#recipe_allergens").attr("name", "recipe_allergens").prop("required", true);
+            }
+        }
+    });
+</script>
+{% endblock %}

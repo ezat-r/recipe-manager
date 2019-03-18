@@ -5,7 +5,7 @@
             {% for category in categories %}
             <li>
                 <div class="collapsible-header">
-                    <a href="{{url_for('deleteCategory', category_id=category._id)}}" class="waves-effect waves-light btn btn-small red">Del</a>
+                    <a href="{{url_for('deleteCategory', category_id=category._id)}}" class="waves-effect waves-light btn btn-small red">Delete</a>
                     <a href="{{url_for('editCategory', category_id=category._id)}}" class="waves-effect waves-light btn btn-small blue">Edit</a>
                     <div class="category-title-header col s9">
                         <strong>{{category.category_name}}</strong>

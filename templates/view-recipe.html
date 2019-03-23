@@ -1,31 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row">
-    <h3>{{recipe.recipe_title}}</h3>
+    <h3 class="center-align">{{recipe.recipe_title}}</h3>
     <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s3"><a class="active" href="#ingredients">Info</a></li>
-            <li class="tab col s3"><a href="#directions">Directions</a></li>
+            <li class="tab col s6"><a class="active" href="#ingredients">Info</a></li>
+            <li class="tab col s6"><a href="#directions">Directions</a></li>
         </ul>
     </div>
     <div id="ingredients" class="col s12">
-        <h5>Description</h4>
+        <h5>Description:</h4>
         <p>{{recipe.recipe_description}}</p>
         <p><strong>Category:</strong> {{recipe.category_name}}</p>
         <p><strong>Time:</strong> {{recipe.recipe_duration}}</p>
+        {% if recipe.containsAllergens %}
         <p><strong>Allergens:</strong> {{recipe.recipe_allergens}}</p>
-        <h5>Ingredients</h5>
+        {% endif %}
+        <p><strong>Views:</strong> {{recipe.recipe_views}}</p>
+        <h5>Ingredients:</h5>
         {% for ingredient in recipe.recipe_ingredients %}
         <p>{{ingredient.list_item}}</p>
         {% endfor %}
     </div>
     <div id="directions" class="col s12">
+        <h5>Steps:</h5>
         {% for step in recipe.recipe_steps %}
         <p>{{step.list_item}}</p>
         {% endfor %}
     </div>
 </div>
-<div class="row">
+<div class="row center-align">
     <a href="{{url_for('editRecipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn blue">Edit Recipe
         <i class="material-icons right">edit</i>
     </a>

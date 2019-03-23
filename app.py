@@ -14,10 +14,10 @@ mongo = PyMongo(app)
 # helper fuction which checks if allergens are present in the form data
 def containsAllergens(formDict):
     if "containsAllergens" in formDict:
-        # return true if there is allergens
+        # return true if the 'containsAllergens' property is present in the form submission data
         return True
     else:
-        # otherwise return false
+        # no 'containsAllergens' property present in form data so return false
         return False
 
 
@@ -34,7 +34,7 @@ def listifyDict(dictVal):
 
         return listDict
     else:
-        # otherwise return a single key-value pair
+        # otherwise return a single key-value pair, with value being the parameter being passed to this function
         return [{"list_item": dictVal}]
 
 
@@ -47,7 +47,7 @@ def index():
     _recipes = mongo.db.recipes.find()
 
     # return the home page template html, and assign it a pagetitle and send accross the 'pageTitle'
-    return render_template("recipes.html", pageTitle="Recipes", recipes=_recipes)
+    return render_template("recipes.html", pageTitle="Recipes - Home", recipes=_recipes)
 
 ######## Add a Recipe
 
@@ -65,22 +65,23 @@ def insertRecipe():
     # convert form data into a dictionary
     formData = request.form.to_dict()
 
-    # check and see if form data contains allergens
-    hasAllergens = containsAllergens(formData)
+    # check and see if form data contains 'containsAllergens' entry
+    hasAllergensEntryInForm = containsAllergens(formData)
 
     # break up ingredients & recipe steps into a list
     if "\r\n" in formData["recipe_ingredients"] or "\r\n" in formData["recipe_steps"]:
         formData["recipe_ingredients"] = listifyDict(formData["recipe_ingredients"])
         formData["recipe_steps"] = listifyDict(formData["recipe_steps"])
 
-    if hasAllergens == True:
-        # if there are allergens then set the 'containsAllergens' key to a value of 'True'
+
+    if hasAllergensEntryInForm == True:
+        # if there are allergens entry in form data then set the 'containsAllergens' key to a value of 'True'
         formData["containsAllergens"] = True
     else:
+        # otherwise set it to 'False'
         formData["containsAllergens"] = False
-        print(formData)
     
-    # add recipe_views to dict
+    # add recipe_views key and an initial value of '0' to formData dict
     formData["recipe_views"] = 0
 
     # add a new recipe to database
@@ -115,17 +116,19 @@ def editRecipe(recipe_id):
     # fetch entry for selected Recipe
     _recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
 
-    _ingr = _recipe["recipe_ingredients"]
-    _steps = _recipe["recipe_steps"]
+    # grab ingredient and steps entries of recipe
+    ingrVal = _recipe["recipe_ingredients"]
+    stepsVal = _recipe["recipe_steps"]
 
-    # break up the ingredients & recipe steps into a new list for better handling on front-end
-    listIngre = ["\r" + item["list_item"] for item in _ingr]
-    listSteps = ["\r" + item["list_item"] for item in _steps]
+    # break up the ingredients & recipe steps into a new list for better handling on front-end.
+    # A carriage return (\r) is pre-fixed to each list entry, so as to avoid unwanted spaces on the front-end
+    ingreList = ["\r" + item["list_item"] for item in ingrVal]
+    stepsList = ["\r" + item["list_item"] for item in stepsVal]
     
     # grab Categories from DB
     allCategories = mongo.db.categories.find()
 
-    return render_template("edit-recipe.html", recipe=_recipe, categories=allCategories, ingredients=listIngre, recipeSteps=listSteps)
+    return render_template("edit-recipe.html", recipe=_recipe, categories=allCategories, ingredients=ingreList, recipeSteps=stepsList)
 
 
 # method to handle the updating of a recipe entry in the Database

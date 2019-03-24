@@ -189,7 +189,7 @@ Multi browser testing was carried out to ensure there is consistency across diff
 - Microsoft Edge
 - Internet Explorer v11
 
-## Deployment
+## Remote Deployment
 
 The website was deployed using Heroku. Deployment process which was followed is given below:
 
@@ -203,3 +203,13 @@ The website was deployed using Heroku. Deployment process which was followed is 
 8. Do a git commit to push all changes to your local repository and run the following command: **git push -u heroku master**
 9. Access your heroku app link to see deployment.
 10. Your app is now deployed onto Heroku.
+
+## Running Locally
+
+In the event you would like to run the project locally follow the below steps:
+
+1. Via the terminal window or PowerShell (on Windows), cd into the root of the directory the project.
+2. Run the following command: **pip3 install -r requirements.txt** -> this will go ahead and install all dependencies needed to run the project.
+3. Once all requirements are install, run the following command: **python app.py**.
+4. This will launch a Flask Web Server and output a url on the terminal window. Copy and paste this in a browser and this will load the project.
+

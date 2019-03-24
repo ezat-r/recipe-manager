@@ -159,12 +159,12 @@ The *checkAllergens* function was tested by passing various dummy inputs and usi
 
 #### 'listifyDict' Function - Why it's needed and how it was tested:
 
-As part of the Add & Edit Recipe forms, the 'Recipe Ingredients', 'Recipe Steps' and 'Allergens' properties had a *textarea* tag as the HTML Form Element.
+As part of the Add & Edit Recipe forms, the 'Recipe Ingredients' and 'Recipe Steps' properties had a *textarea* tag as the HTML Form Element.
 
-However, when users entered multiple lines of text into the textarea's and submitted the form, in the backend a value was returned which contained various carriage returns and new line escape characters (\r\n) separating each line of text, which when viewed in the web ui was not very nice and gave bad user experience. The HTML templates use *Jinja* which does 
+However, when users entered multiple lines of text into the textarea's and submitted the form, in the backend a value was returned which contained various carriage returns and new line escape characters (\r\n) separating each line of text, which when viewed in the web ui was not very nice and gave bad user experience.
 - To solve this, the *listify* function was created. The function takes a string value as a parameter and checks for the presence of '\r\n' characters; if present then the value is split and stored into a list variable. Then, the list is used to create another list of key-value dicts with each one holding a line of text entry of the parameter. This list of key-value pairs is then returned. 
     - If there are no '\r\n' characters present in the parameter, then a list consisting of a single dict is returned; the dict has the value equal to the parameter being passed to the function.
-- This function made it easier to display *recipe_ingredients*, *recipe_steps* and *recipe_allergens* on the web ui.
+- This function made it easier to display *recipe_ingredients* and *recipe_steps* on the web ui.
 
 The *listifyDict* function was tested by passing various dummy inputs and using Python **assertions** to check the output.
 

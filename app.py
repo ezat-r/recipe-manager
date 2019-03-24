@@ -291,4 +291,4 @@ def deleteCategory(category_id):
 
 if __name__ == "__main__":
     # run app in debugging mode
-    app.run(debug=True)
+    app.run(Port=5000, debug=True)

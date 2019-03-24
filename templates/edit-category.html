@@ -2,6 +2,7 @@
 {% block content%}
 <div class="row">
     <h3>Edit Category</h3>
+    <!-- Begin Edit Category Form -->
     <div class="row">
         <form action="{{url_for('updateCategory', category_id=category._id)}}" method="POST" class="col s12">
             <div class="row">
@@ -18,5 +19,6 @@
             </div>
         </form>
     </div>
+    <!-- End Edit Category Form -->
 </div>
 {% endblock%}

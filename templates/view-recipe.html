@@ -2,12 +2,15 @@
 {% block content %}
 <div class="row">
     <h3 class="center-align">{{recipe.recipe_title}}</h3>
+    <!-- Begin Tabs -->
     <div class="col s12">
         <ul class="tabs">
             <li class="tab col s6"><a class="active" href="#ingredients">Info</a></li>
             <li class="tab col s6"><a href="#directions">Directions</a></li>
         </ul>
     </div>
+    <!-- End Tabs -->
+    <!-- Begin Recipe Info -->
     <div id="ingredients" class="col s12">
         <h5>Description:</h4>
         <p>{{recipe.recipe_description}}</p>
@@ -23,13 +26,17 @@
         <p>{{ingredient.list_item}}</p>
         {% endfor %}
     </div>
+    <!-- End Recipe Info -->
+    <!-- Begin Recipe Directions -->
     <div id="directions" class="col s12">
         <h5>Steps:</h5>
         {% for step in recipe.recipe_steps %}
         <p>{{step.list_item}}</p>
         {% endfor %}
     </div>
+    <!-- End Recipe Directions -->
 </div>
+<!-- Begin Edit/Delete Buttons -->
 <div class="row center-align">
     <a href="{{url_for('editRecipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn blue">Edit Recipe
         <i class="material-icons right">edit</i>
@@ -38,6 +45,7 @@
         <i class="material-icons right">delete</i>
     </a>
 </div>
+<!-- End Edit/Delete Buttons -->
 {% endblock %}
 {% block js %}
 <script>

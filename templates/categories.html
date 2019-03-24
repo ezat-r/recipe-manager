@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="row">
-        <ul class="collapsible">
-            {% for category in categories %}
-            <li>
-                <div class="collapsible-header">
-                    <a href="{{url_for('deleteCategory', category_id=category._id)}}" class="waves-effect waves-light btn btn-small red">Del</a>
-                    <a href="{{url_for('editCategory', category_id=category._id)}}" class="waves-effect waves-light btn btn-small blue">Edit</a>
-                    <div class="category-title-header col s9">
-                        <strong>{{category.category_name}}</strong>
-                    </div>
+<!-- Begin  Categories List-->
+<div class="row">
+    <ul class="collapsible">
+        {% for category in categories %}
+        <li>
+            <div class="collapsible-header">
+                <a href="{{url_for('deleteCategory', category_id=category._id)}}" class="waves-effect waves-light btn btn-small red">Del</a>
+                <a href="{{url_for('editCategory', category_id=category._id)}}" class="waves-effect waves-light btn btn-small blue">Edit</a>
+                <div class="category-title-header col s9">
+                    <strong>{{category.category_name}}</strong>
                 </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="row center-align">
-        <a href="/add-category" class="waves-effect waves-light btn purple">Add New Category
-            <i class="material-icons right">playlist_add</i>
-        </a>
-    </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<!-- End  Categories List-->
+<!-- Begin  Add Category Button-->
+<div class="row center-align">
+    <a href="/add-category" class="waves-effect waves-light btn purple">Add New Category
+        <i class="material-icons right">playlist_add</i>
+    </a>
+</div>
+<!-- End  Add Category Button-->
 {% endblock %}

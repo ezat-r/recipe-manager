@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if recipeCount > 0 %}
+    <div class="row">
+        <h5 class="center-align">Recipes Matching Category: {{categorySelected}}</h5>
+    </div>
+    <!-- Begin Recipe List -->
+    <ul class="collapsible">
+        {% for recipe in recipes %}
+        <li class="recipe-item">
+            <div class="collapsible-header">
+                <div class="col s3">
+                    <i class="material-icons">expand_more</i>
+                    <a href="/view-recipe/{{recipe._id}}" class="waves-effect waves-light btn btn-small orange">View</a>
+                    <a href="/edit-recipe/{{recipe._id}}" class="waves-effect waves-light btn btn-small blue">Edit</a>
+                </div>
+                <div class="recipe-title-header col s9">
+                    <strong>{{recipe.recipe_title}}</strong>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <p><strong>Author:</strong> {{recipe.recipe_author}}</p>
+                <p><strong>Category:</strong> {{recipe.category_name}}</p>
+                <p><strong>Views:</strong> {{recipe.recipe_views}}</p>
+                <p><strong>Time:</strong> {{recipe.recipe_duration}}</p>
+                <p><strong>Description:</strong> {{recipe.recipe_description}}</p>
+                {% if recipe.containsAllergens %}
+                <p><strong>Allergens:</strong> {{recipe.recipe_allergens}}</p>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <!-- End Recipe List -->
+    <!-- Begin Pagination -->
+    <div class="row" id="pag-container">
+        <ul class="pagination">
+            <li class="waves-effect" id="pag-left"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class="waves-effect pag-item active"><a>1</a></li>
+            <li class="waves-effect" id="pag-right"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+    </div>
+    <!-- End Pagination -->
+    {% else %}
+    <div class="row">
+        <h5>There are no recipes matching this Category. Click the button below to go back to the home page!</h5>
+    </div>
+    {% endif %}
+    <div class="row center-align">
+        <a href="/" class="waves-effect waves-light btn purple">Go Back
+            <i class="material-icons right">home</i>
+        </a>
+    </div>
+{% endblock %}
+{% block js %}
+<!-- Pagination JS -->
+<script src="{{url_for('static', filename='js/pagination.js')}}"></script>
+<script>
+    
+    $(document).ready(function(){
+        // Materialize CSS - Collapsible
+        $('.collapsible').collapsible();
+
+        // Materialize CSS - Form Select tag initialisation
+        $('select').formSelect();
+    });
+
+</script>
+{% endblock%}

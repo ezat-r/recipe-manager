@@ -17,7 +17,16 @@ function paginate(){
         $(`.recipe-item:gt(${numberLimit - 1})`).hide();
         
         // calculate number of pagination links needed
-        var numberPaginationLinks = Math.round(numberOfItems / numberLimit);
+        var numberPaginationLinks = 0;
+
+        if((numberOfItems / numberLimit) % 1 >= 0.5 || (numberOfItems / numberLimit) % 1 == 0){
+            // if decimal part of the division is bigger than 0.5 or there is no remainder, then do a simple math.round
+            numberPaginationLinks = Math.round(numberOfItems / numberLimit);
+        }else{
+            // otherwise perform a math.round and add 1 to it, to make sure correct number of pagination links are shown
+            numberPaginationLinks = Math.round(numberOfItems / numberLimit) + 1;
+        }
+        
 
         for(var i=1; i<numberPaginationLinks; i++){
             // keep inserting li tag after the last li element in the ul element

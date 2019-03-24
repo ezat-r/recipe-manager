@@ -126,6 +126,10 @@
         // Materialize CSS - Form Select tag initialisation
         $('select').formSelect();
 
+        function toggleElementClass(id, className){
+            $(id).toggleClass(className);
+        }
+
         // Hide/show helper message for 'recipe_ingredients' textarea
         $("#recipe_ingredients").focusin(function(){
             toggleElementClass("#form-helper1", "element-hide");
@@ -150,10 +154,6 @@
 
             hideShowAllergensField();
         });
-
-        function toggleElementClass(id, className){
-            $(id).toggleClass(className);
-        }
 
         function hideShowAllergensField(){
             // check if there is a 'name' attribute already present

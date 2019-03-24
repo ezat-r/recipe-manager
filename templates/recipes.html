@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% if recipeCount > 0 %}
+    <!-- Begin Form for Filtering Recipes -->
+    <form action="{{url_for('filterRecipes')}}" method="POST" id="filter-form" class="col s8">
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">poll</i>
+                <select id="filter_category" name="filter_category" required>
+                    <option disabled selected>Choose A Category To Filter</option>
+                    {% for category in categories %}
+                    <option value="{{category.category_name}}">{{category.category_name}}</option>
+                    {% endfor %}
+                </select>
+                <label>Filter Recipes</label>
+            </div>
+        </div>
+        <div class="row center-align">
+            <button id="filter_submit_btn" class="btn waves-effect waves-light blue center-align" disabled type="submit">Filter Recipes
+                <i class="material-icons right">search</i>
+            </button>
+        </div>
+    </form>
+    <!-- End Form for Filtering Recipes -->
+    <!-- Begin Recipe List -->
     <ul class="collapsible">
         {% for recipe in recipes %}
         <li class="recipe-item">
@@ -9,7 +32,7 @@
                     <a href="{{url_for('viewRecipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn btn-small orange">View</a>
                     <a href="{{url_for('editRecipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn btn-small blue">Edit</a>
                 </div>
-                <div class="recipe-title-header col s9 right-align">
+                <div class="recipe-title-header col s9">
                     <strong>{{recipe.recipe_title}}</strong>
                 </div>
             </div>
@@ -26,11 +49,19 @@
         </li>
         {% endfor %}
     </ul>
+    <!-- End Recipe List -->
+    {% else %}
+    <!-- Begin No Recipe Helper Message -->
+    <h5 id="no-recipe-message" class="center-align">No recipes at present. Click the button below to add a Recipe!</h5>
+    <!-- End No Recipe Helper Message -->
+    {% endif %}
+    <!-- Begin Add Recipe Button -->
     <div class="row center-align">
         <a href="{{url_for('addRecipe')}}" class="waves-effect waves-light btn purple">Add New Recipe
             <i class="material-icons right">playlist_add</i>
         </a>
     </div>
+    <!-- End Add Recipe Button -->
     <!-- Begin Pagination -->
     <div class="row" id="pag-container">
         <ul class="pagination">
@@ -48,6 +79,16 @@
     $(document).ready(function(){
         // Materilize CSS- collapsible element
         $('.collapsible').collapsible();
+
+        // Materialize CSS - Form Select tag initialisation
+        $('select').formSelect();
+
+        // select element event handler - enable 'Filter Recipes' button only if a category is selected
+        $("#filter_category").on("change", function(){
+            if($("#filter_category").val() != null){
+                $("#filter_submit_btn").removeAttr("disabled");
+            }
+        })
     });
 </script>
 {% endblock%}

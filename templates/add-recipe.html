@@ -9,7 +9,7 @@
             <div class="input-field col s12">
                 <i class="material-icons prefix">poll</i>
                 <select id="category" name="category_name">
-                    <option disabled selected>Choose Category</option>
+                    <option disabled selected>Choose A Recipe Category</option>
                     {% for category in categories %}
                     <option value="{{category.category_name}}">{{category.category_name}}</option>
                     {% endfor %}
@@ -94,11 +94,13 @@
             <p id="form-helper2" class="helper-message element-hide">Press 'Enter' to add a new line!</p>
         </div>
         <!-- End Recipe Steps Element -->
-        <div class="row center-align">
-            <button class="waves-effect waves-light btn green" type="submit">Add Recipe
+        <!-- Begin Add Recipe Button -->
+        <div class="center-align">
+            <button class="waves-effect waves-light btn green" id="add_recipe_btn" type="submit" disabled>Add Recipe
                 <i class="material-icons right">playlist_add</i>
             </button>
         </div>
+        <!-- End Add Recipe Button -->
     </form>
     <!-- End Form -->
 </div>
@@ -111,6 +113,10 @@
 
         // Materialize CSS - Form Select tag initialisation
         $('select').formSelect();
+
+        function toggleElementClass(id, className){
+            $(id).toggleClass(className);
+        }
 
         // Hide/show helper message for 'recipe_ingredients' textarea
         $("#recipe_ingredients").focusin(function(){
@@ -137,9 +143,12 @@
             hideShowAllergensField();
         });
 
-        function toggleElementClass(id, className){
-            $(id).toggleClass(className);
-        }
+        // select element event handler - enable 'Add Recipe' button only if a category is selected
+        $("#category").on("change", function(){
+            if($("#category").val() != null){
+                $("#add_recipe_btn").removeAttr("disabled");
+            }
+        })
 
         function hideShowAllergensField(){
             // check if there is a 'name' attribute already present

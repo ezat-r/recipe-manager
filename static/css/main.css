@@ -1,4 +1,21 @@
-/* List view - View & Edit buttons */
+/* Home Page  */
+
+#no-recipe-message{
+    margin-top: 25px;
+    margin-bottom: 30px;
+    padding: 5px;
+}
+
+#filter-form{
+    margin-top: 30px;
+}
+
+/* Collapsibles - Home page, Filter page and Categories page */
+.collapsible{
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+
 .btn-small{
     height: 24px;
     width: 60px;
@@ -7,7 +24,6 @@
     padding: 0 0.5em;
 }
 
-/* List view - recipe & category title  */
 .recipe-title-header, .category-title-header{
     margin-top: 5px;
 }
@@ -17,7 +33,7 @@
     display: none;
 }
 
-/* Add & Edit Recipe Page - helper message */
+/* Add & Edit Recipe Page */
 
 .helper-message{
     color: red;

@@ -1,7 +1,9 @@
+import sys
+sys.path.insert(0, '../')
+
 from app import *
 
 # Testing the 'checkAllergens' function of the app.py
-
 def test_checkAllergens_Function():
     testVal1 = {"recipe_title": "Test", "containsAllergens": True, "recipeAllergens": "Test"}
     testVal2 = {"recipe_title": "Test", "containsAllergens": False, "recipeAllergens": "Test"}
@@ -19,6 +21,7 @@ def test_checkAllergens_Function():
     print("Result of Testing 'containsAllergens' function: All Tests Passed")
 
 
+# Testing the 'listify' function of the app.py
 def test_listifyDict_Function():
     test1Input = "Hello\r\nWorld\r\nand\r\nEveryone\r\nElse"
     test1ExpectedResult = [{"list_item": "Hello"}, {"list_item": "World"},{"list_item": "and"}, {"list_item": "Everyone"}, {"list_item": "Else"}]

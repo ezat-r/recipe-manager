@@ -120,14 +120,14 @@ Testing scenarios run:
 4. Edit Recipe:
     1. Go to the "Recipe Manager - Home" page.
     2. Click the *EDIT* button for one of your Recipes.
-    3. Make some changes and then click the *UPDATE RECIPE*
-    4. Verify that you are re-directed to the "Recipe Manager - Home" page and the new Recipe can be viewed.
+    3. Make some changes and then click the *UPDATE RECIPE* button.
+    4. Verify that you are re-directed to the "Recipe Manager - Home" page and the updates are applied to the Recipe.
 
 5. Delete Recipe:
     1. Go to the "Recipe Manager - Home" page.
     2. Click the *View* button for one of the recipes on display.
     3. Click the *DELETE* button at the bottom of the page.
-    4. Verify that you are re-directed to the "Recipe Manager - Home" page and the Recipe is no longer visible on the page.
+    4. Verify that you are re-directed to the "Recipe Manager - Home" page and the deleted Recipe is no longer visible on the page.
 
 5. Detailed Recipe View:
     1. Go to the "Recipe Manager - Home" page.
@@ -135,7 +135,7 @@ Testing scenarios run:
     3. Verify that all the information on the page is correct.
 
 6. Typography:
-	1. Go to the *Home* page.
+	1. Go to the "Recipe Manager - Home" page.
 	2. Have a look at the text and observe if all text is clearly visible i.e. is it too small, too big.
     3. Click the 'View' button to access a detailed Recipe view and verify that the text looks readable, is not hard to read etc.
 	4. Follow step 2-3 again, however, this time do the same for different screen sizes i.e. Phone, Tablet, Desktop etc.
@@ -144,7 +144,7 @@ Testing scenarios run:
 ### Python Code Tests
 
 Instead of using a framework to test my code, like I did in Section 5, I used Python in order to Test certain aspects of my Python code.
-    - I made use of *assertions* to make sure that the actual results of the tests matched the expected outputs
+- I made use of *assertions* to make sure that the actual results of the tests matched the expected outputs
 
 In the app.py there are 2 functions which I've written tests for; the *checkAllergens* function & the *listifyDict* function. The tests are in the *tests.py* file which can be found in the **Tests** folder.
 
@@ -152,8 +152,8 @@ In the app.py there are 2 functions which I've written tests for; the *checkAlle
 
 As part of the Add & Edit Recipe forms, I've used a toggle switch button which the user can set to 'On' or 'Off'. When the 'Contains Allergens' switch is set to the 'On' state, it then brings into view the 'Allergens' input field which allows a user to enter allergen related information.
 
-However, there was an issue with the submission of forms which had the 'Contains Allergens' switch disabled; when it was set to 'Off' the switch elements value was not submitted as part of the form
-    - this led to issues in the backend because the code in the backend depended on the 'containsAllergens' value in the form submission data, but because it wasn't included, it threw errors. So to get around this issue, I created the *checkAllergens* function. The function takes the formData dict as a parameter and checks for the presence of a 'containsAllergens' dict key; if one is present then a value of *True* is returned, otherwise if there is no entry whatsoever, then a value of *False* is returned. This resolved the issue in the backend when carrying out actions such as Adding a new recipe or Updating an existing one in the MongoDB database.
+However, there was an issue with the submission of forms which had the 'Contains Allergens' switch disabled; when it was set to 'Off' the switch elements value was not submitted as part of the form;
+- this led to issues in the backend because the code in the backend depended on the 'containsAllergens' value in the form submission data, but because it wasn't included, it threw errors. So to get around this issue, I created the *checkAllergens* function. The function takes the formData dict as a parameter and checks for the presence of a 'containsAllergens' dict key; if one is present then a value of *True* is returned, otherwise if there is no entry whatsoever, then a value of *False* is returned. This resolved the issue in the backend when carrying out actions such as Adding a new recipe or Updating an existing one in the MongoDB database.
 
 The *checkAllergens* function was tested by passing various dummy inputs and using Python **assertions** to check the output.
 
@@ -162,9 +162,9 @@ The *checkAllergens* function was tested by passing various dummy inputs and usi
 As part of the Add & Edit Recipe forms, the 'Recipe Ingredients', 'Recipe Steps' and 'Allergens' properties had a *textarea* tag as the HTML Form Element.
 
 However, when users entered multiple lines of text into the textarea's and submitted the form, in the backend a value was returned which contained various carriage returns and new line escape characters (\r\n) separating each line of text, which when viewed in the web ui was not very nice and gave bad user experience. The HTML templates use *Jinja* which does 
-    - To solve this, the *listify* function was created. The function takes a string value as a parameter and checks for the presence of '\r\n' characters; if present then the value is split and stored into a list variable. Then, the list is used to create another list of key-value dicts with each one holding a line of text entry of the parameter. This list of key-value pairs is then returned. 
-        - If there are no '\r\n' characters present in the parameter, then a list consisting of a single dict is returned; the dict has the value equal to the parameter being passed to the function.
-    - This function made it easier to display *recipe_ingredients*, *recipe_steps* and *recipe_allergens* on the web ui.
+- To solve this, the *listify* function was created. The function takes a string value as a parameter and checks for the presence of '\r\n' characters; if present then the value is split and stored into a list variable. Then, the list is used to create another list of key-value dicts with each one holding a line of text entry of the parameter. This list of key-value pairs is then returned. 
+    - If there are no '\r\n' characters present in the parameter, then a list consisting of a single dict is returned; the dict has the value equal to the parameter being passed to the function.
+- This function made it easier to display *recipe_ingredients*, *recipe_steps* and *recipe_allergens* on the web ui.
 
 The *listifyDict* function was tested by passing various dummy inputs and using Python **assertions** to check the output.
 

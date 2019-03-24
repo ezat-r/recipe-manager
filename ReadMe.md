@@ -6,7 +6,7 @@ A recipe managment system allowing users to create, read, update and delete reci
 
 To view the project in action, visit the following link:
 
-https://ezat-r.github.io/simon-memory-game/
+https://recipe-flask-manager.herokuapp.com/
 
 ## UX
 
@@ -194,20 +194,12 @@ Multi browser testing was carried out to ensure there is consistency across diff
 The website was deployed using Heroku. Deployment process which was followed is given below:
 
 1. Login to Heroku dashboard.
-2. Create a new *App* of type **Python** - for location select *Europe*.
+2. Create a new *App* - for location select *Europe*.
 3. Once the app has been created, click the **Settings** tab and copy the *Heroku GIT URL*.
-4. Go into your Cloud9 and enter the following command in the terminal: git remote add heroku https://heroku-git-url.git -> replace the url with your appropriate one.
-5. Run the following command to create a *requirements.txt* file: **pip3 freeze --local > requirements.txt**
-6. Create a *Procfile* by running the following command: **echo web: python run.py > Procfile**
-7. Do a git commit to push all changes to your local repository and run the following command: **git push -u heroku master**
-8. Access your heroku app link to see deployment.
-9. Your app is now deployed onto Heroku.
-
-## Credits
-
-### Content
-- Information on the Simon Memory Game was obtained from [Wikipedia Article](https://en.wikipedia.org/wiki/Simon_(game))
-
-### Media
-- Picture of male & female on home page were obtained from the following Royalty Free Website: https://www.pexels.com/royalty-free-images/
-- Simon game music was obtained from the following Royalty Free Website: http://soundbible.com/
+4. Go into your app settings and click the *Reveal Config Vars* button and add an entry for your **IP** & **PORT**.
+5. Go into your Cloud9 and enter the following command in the terminal: git remote add heroku https://heroku-git-url.git -> replace the url with your appropriate one.
+6. Run the following command to create a *requirements.txt* file: **pip3 freeze --local > requirements.txt**
+7. Create a *Procfile* by running the following command: **echo web: python app.py > Procfile**
+8. Do a git commit to push all changes to your local repository and run the following command: **git push -u heroku master**
+9. Access your heroku app link to see deployment.
+10. Your app is now deployed onto Heroku.

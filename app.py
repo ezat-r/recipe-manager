@@ -2,6 +2,7 @@ from flask import Flask, url_for, redirect, render_template, request
 import json
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import os
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = "recipe-manager"
@@ -291,4 +292,5 @@ def deleteCategory(category_id):
 
 if __name__ == "__main__":
     # run app in debugging mode
-    app.run(port=5000, debug=True)
+    app.run(host=os.environ.get("IP"),
+    port=os.environ.get("PORT"), debug=True)
